@@ -2,5 +2,13 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
-  p User List goes here
+  p Welcome to the #{title}
+
+    ul
+    each user in user_list
+      li  User Name: #{user.user_name} 
+        //- |  (#{author.date_of_birth} - #{author.date_of_death})
+        //- |  (#{author.birth_formatted} - #{author.death_formatted}) 
+
+    else
+      li There are no users.
