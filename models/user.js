@@ -1,6 +1,5 @@
 // User Schema defined here
 var mongoose = require('mongoose');
-var moment = require('moment');
 
 var Schema = mongoose.Schema;
 
@@ -14,7 +13,7 @@ const UserSchema = new Schema({
 
 // Virtual for user's full name
 UserSchema
-  .virtual('name')
+  .virtual('full_name')
   .get(function () {
 
   // To avoid errors in cases where an author does not have either a family name or first name
@@ -22,7 +21,7 @@ UserSchema
 
   var fullname = '';
   if (this.first_name && this.family_name) {
-    fullname = this.family_name + ', ' + this.first_name
+    fullname = this.first_name + ' ' + this.family_name
   }
   if (!this.first_name || !this.family_name) {
     fullname = '';
