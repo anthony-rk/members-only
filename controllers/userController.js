@@ -27,46 +27,46 @@ exports.user_create_get = function(req, res) {
 };
 
 // Handle Author create on POST.
-// exports.user_create_post = (req, res, next) => {
-//     bcrypt.genSalt(10, function(err, salt) {
-//         bcrypt.hash(req.body.password, salt, function(err, hash) {
-//             // if err, do something
-//             if (err) { 
-//                 return next(err);
-//             };
-//             // otherwise, store hashedPassword in DB
-//             const user = new User({
-//                 user_name: req.body.user_name,
-//                 password: hash,
-//                 first_name: req.body.first_name,
-//                 family_name: req.body.family_name,
-//                 membership_status: 'member'
-//             }).save(err => {
-//                 if (err) { 
-//                     return next(err);
-//                 };
-//                 res.redirect("/");
-//             });
-//         });
-//     });
-// };
-
 exports.user_create_post = (req, res, next) => {
-     // Create an User object with escaped and trimmed data.
-    const user = new User({
-        user_name: req.body.user_name,
-        password: req.body.password,
-        first_name: req.body.first_name,
-        family_name: req.body.family_name,
-        membership_status: 'Member'
+    bcrypt.genSalt(10, function(err, salt) {
+        bcrypt.hash(req.body.password, salt, function(err, hash) {
+            // if err, do something
+            if (err) { 
+                return next(err);
+            };
+            // otherwise, store hashedPassword in DB
+            const user = new User({
+                user_name: req.body.user_name,
+                password: hash,
+                first_name: req.body.first_name,
+                family_name: req.body.family_name,
+                membership_status: 'Member'
+            }).save(err => {
+                if (err) { 
+                    return next(err);
+                };
+                res.redirect("/");
+            });
+        });
     });
-    console.log(user)
-    user.save(function (err) {
-        if (err) { return next(err); }
-        // Successful - redirect 
-        res.redirect('./');
-    });
-}
+};
+
+// exports.user_create_post = (req, res, next) => {
+//      // Create an User object with escaped and trimmed data.
+//     const user = new User({
+//         user_name: req.body.user_name,
+//         password: req.body.password,
+//         first_name: req.body.first_name,
+//         family_name: req.body.family_name,
+//         membership_status: 'Member'
+//     });
+//     console.log(user)
+//     user.save(function (err) {
+//         if (err) { return next(err); }
+//         // Successful - redirect 
+//         res.redirect('./');
+//     });
+// }
 
 // exports.author_create_post = [
 
