@@ -8,12 +8,9 @@ router.get('/', function(req, res, next) {
 
 // Require controller modules.
 // var messages_controller = require('../controllers/messagesController');
-var user_controller = require('../controllers/userController');
-
-
-/// BOOK ROUTES ///
+// var user_controller = require('../controllers/userController');
 
 // GET catalog home page.
-router.get('/user', user_controller.get_user_list);
+// router.get('/user', user_controller.get_user_list);
 
 module.exports = router;
