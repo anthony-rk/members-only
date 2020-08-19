@@ -14,10 +14,11 @@ router.get('/sign-up', user_controller.user_create_get);
 /* POST new user sign-up listing. */
 router.post('/sign-up', user_controller.user_create_post);
 
-// /* GET user Log-In. */
-// router.get('/sign-up', user_controller.user_create_get);
+/* GET user Log-In. */
+router.get('/log-in', user_controller.user_login_get);
 
-// /* POST user Log-In. */
-// router.post('/sign-up', user_controller.user_create_post);
+/* POST user Log-In. */
+// Had to add this to App.js for some reason
+// router.post('/log-in', user_controller.user_login_post);
 
 module.exports = router;
