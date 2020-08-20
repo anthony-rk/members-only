@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
-    user_name: { type: String, required: true },
+    username: { type: String, required: true },
     password: { type: String, required: true },
     first_name: {type: String, required: true, maxlength: 100},
     family_name: {type: String, required: true, maxlength: 100},
@@ -30,5 +30,5 @@ UserSchema
   return fullname;
 });
 
-//Export model
+// Export model
 module.exports = mongoose.model('User', UserSchema);
