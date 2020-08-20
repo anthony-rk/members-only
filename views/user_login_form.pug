@@ -2,12 +2,14 @@ extends layout
 
 block content
   P User Log In
+    //- if locals.messages.error
+    //-   h1 #{locals.messages.error}
   
 
     form(method='POST' action='')
       div.form-group
-        label(for='user_name') User Name:
-        input#user_name.form-control(type='text' placeholder='User name' name='user_name' required='true' )
+        label(for='username') User Name:
+        input#username.form-control(type='text' placeholder='User name' name='username' required='true' )
 
         label(for='password') Password:
         input#password.form-control(type='password' placeholder='Password' name='password' required='true' )
