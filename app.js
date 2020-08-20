@@ -1,3 +1,6 @@
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -6,30 +9,26 @@ const logger = require('morgan');
 
 // Added the following 
 const session = require("express-session");
+// const flash = require("express-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const ejs = require("ejs");
+// const ejs = require("ejs");
 const bcrypt = require("bcryptjs");
-const dotenv = require("dotenv")
-dotenv.config();
+// const dotenv = require("dotenv")
+// dotenv.config();
+const User = require('./models/user');
+
+
+// const initializePassport = require('./passport-config');
+// initializePassport(passport);
 
 // Setup MongoDB connection
 const mongoDb = process.env.DB_HOST;
 mongoose.connect(mongoDb, { useUnifiedTopology: true, useNewUrlParser: true});
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "mongo connection error"));
-
-// const User = mongoose.model(
-//   "User",
-//   new Schema({
-//     user_name: { type: String, required: true },
-//     password: { type: String, required: true },
-//     first_name: { type: String, required: true },
-//     last_name: { type: String, required: true }
-//   })
-// );
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -47,8 +46,67 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// PassportJS Authentication below
+app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(
+    new LocalStrategy((username, password, done) => {
+      User.findOne({ username: username }, (err, user) => {
+        if (err) { 
+          return done(err);
+        };
+        if (!user) {
+          return done(null, false, { msg: "Incorrect username" });
+        }
+        bcrypt.compare(password, user.password, (err, res) => {
+            if (res) {
+              // passwords match! log user in
+              return done(null, user)
+            } else {
+              // passwords do not match!
+              return done(null, false, {msg: "Incorrect password"})
+            }
+          })
+        return done(null, user);
+      });
+    })
+);
+
+passport.serializeUser(function(user, done) {
+    done(null, user.id);
+});
+  
+passport.deserializeUser(function(id, done) {
+    User.findById(id, function(err, user) {
+      done(err, user);
+    });
+});
+
+app.use(function(req, res, next) {
+  res.locals.currentUser = req.user;
+  next();
+});
+
+// Set up Route Handling
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+// Log in || Log out //
+app.post(
+  "/users/log-in",
+  passport.authenticate("local", {
+      successRedirect: "/",
+      failureRedirect: "/users/log-in",
+      failureFlash: true
+  })
+);
+
+app.get("/users/log-out", (req, res) => {
+  req.logout();
+  res.redirect("/");
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
