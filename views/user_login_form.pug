@@ -2,8 +2,8 @@ extends layout
 
 block content
   P User Log In
-    //- if locals.messages.error
-    //-   h1 #{locals.messages.error}
+    //- if messages.error
+    //-   h1 #{messages.error}
   
 
     form(method='POST' action='')
@@ -15,7 +15,7 @@ block content
         input#password.form-control(type='password' placeholder='Password' name='password' required='true' )
       
       
-        button.btn.btn-primary(type='submit') Submit
+        button.btn.btn-primary(type='submit') Login
   if errors 
     ul
       for error in errors
