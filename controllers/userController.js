@@ -1,9 +1,9 @@
-var Message = require('../models/message');
+// var Message = require('../models/message');
 var User = require('../models/user');
 const bcrypt = require("bcryptjs");
-const dotenv = require("dotenv");
-
-var async = require('async');
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
+const flash = require("express-flash");
 
 const { body,validationResult } = require('express-validator/check');
 const { sanitizeBody } = require('express-validator/filter');
@@ -13,7 +13,7 @@ exports.get_user_list = function(req, res, next) {
 
     User.find()
       .populate('user')
-      .sort([['user_name', 'ascending']])
+      .sort([['username', 'ascending']])
       .exec(function (err, list_users) {
         if (err) { return next(err); }
         // Successful, so render
@@ -30,7 +30,7 @@ exports.user_create_get = function(req, res) {
 exports.user_create_post = [
     
     // Validate fields.
-    body('user_name').isLength({ min: 1 }).trim().withMessage('User name must be specified.'),
+    body('username').isLength({ min: 1 }).trim().withMessage('User name must be specified.'),
     body('password').isLength({ min: 1 }).trim().withMessage('Password must be specified.'),
     body('first_name').isLength({ min: 1 }).trim().withMessage('First name must be specified.')
         .isAlphanumeric().withMessage('First name has non-alphanumeric characters.'),
@@ -39,7 +39,7 @@ exports.user_create_post = [
 
 
     // Sanitize fields.
-    sanitizeBody('user_name').escape(),
+    sanitizeBody('username').escape(),
     sanitizeBody('password').escape(),
     sanitizeBody('first_name').escape(),
     sanitizeBody('family_name').escape(),
@@ -68,7 +68,7 @@ exports.user_create_post = [
                     };
                     // otherwise, store hashedPassword in DB
                     const user = new User({
-                        user_name: req.body.user_name,
+                        username: req.body.username,
                         password: hash,
                         first_name: req.body.first_name,
                         family_name: req.body.family_name,
@@ -83,3 +83,36 @@ exports.user_create_post = [
         })
     }
 }];
+
+// Display User log-in form on GET.
+exports.user_login_get = function(req, res, next) {
+    res.render('user_login_form', { title: 'User Log In'} );
+};
+
+// Handle User login.
+// exports.user_login_post = function(req, res, next) {
+//     // res.render('user_login_form', { title: 'User Log In'} );
+//       passport.authenticate("local", {
+//       successRedirect: "/",
+//       failureRedirect: "/users/log-in",
+//       failureFlash: true
+//   })
+// };
+
+// Handle User logout.
+// exports.user_logout_get = function(req, res, next) {
+//     req.logout();
+//     res.redirect("/");
+// };
+
+// app.post(
+//   "/log-in",
+//   passport.authenticate("local", {
+//       successRedirect: "/",
+//       failureRedirect: "/"
+//   })
+// );
+// app.get("/log-out", (req, res) => {
+//   req.logout();
+//   res.redirect("/");
+// });

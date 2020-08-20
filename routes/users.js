@@ -17,8 +17,9 @@ router.post('/sign-up', user_controller.user_create_post);
 /* GET user Log-In. */
 router.get('/log-in', user_controller.user_login_get);
 
+// Had to add this to App.js for some reason...
+//
 /* POST user Log-In. */
-// Had to add this to App.js for some reason
 // router.post('/log-in', user_controller.user_login_post);
 
 module.exports = router;
