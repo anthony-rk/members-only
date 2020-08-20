@@ -2,15 +2,8 @@ var express = require('express');
 var router = express.Router();
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+router.get("/", (req, res) => {
+  res.render("index", { title: 'Message Board', user: req.user });
 });
-
-// Require controller modules.
-// var messages_controller = require('../controllers/messagesController');
-// var user_controller = require('../controllers/userController');
-
-// GET catalog home page.
-// router.get('/user', user_controller.get_user_list);
 
 module.exports = router;
