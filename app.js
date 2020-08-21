@@ -9,20 +9,12 @@ const logger = require('morgan');
 
 // Added the following 
 const session = require("express-session");
-// const flash = require("express-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-// const ejs = require("ejs");
 const bcrypt = require("bcryptjs");
-// const dotenv = require("dotenv")
-// dotenv.config();
 const User = require('./models/user');
-
-
-// const initializePassport = require('./passport-config');
-// initializePassport(passport);
 
 // Setup MongoDB connection
 const mongoDb = process.env.DB_HOST;
