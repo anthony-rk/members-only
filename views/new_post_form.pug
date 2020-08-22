@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  P New Post Form
+
+    form(method='POST' action='')
+      div.form-group
+        label(for='message_text') Post:
+        input#message_text.form-control(type='text' placeholder='Hello world!' name='message_text' required='true')
+      
+      
+        button.btn.btn-primary(type='submit') Submit Post
+  if errors 
+    ul
+      for error in errors
+        li!= error.msg
