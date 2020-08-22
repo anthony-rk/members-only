@@ -24,6 +24,7 @@ db.on("error", console.error.bind(console, "mongo connection error"));
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+const messagesRouter = require('./routes/messages');
 
 // Create the Express application object
 const app = express();
@@ -84,6 +85,7 @@ app.use(function(req, res, next) {
 // Set up Route Handling
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/messages', messagesRouter);
 
 // Log in || Log out //
 app.post(
