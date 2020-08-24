@@ -3,6 +3,19 @@ extends layout
 block content
   h1= title
   if user
-    p Welcome to #{title} #{user.username}!
+    p Welcome #{user.username}!
+    a(href="/messages/new-post") New Post
   else 
-    p Welcome to the #{title}
+    p Please Login or Sign up to Participate.
+
+  //- a(href="/messages/new-post") New Post
+
+  ul
+    if message_list
+      each message in message_list
+        //- li  User Name: #{message.username} 
+        //- li  Message: #{message.message_text}
+        li #{message}
+
+    else
+      li There are no messages.
