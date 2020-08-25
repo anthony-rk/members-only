@@ -31,7 +31,31 @@ exports.user_create_post = [
     
     // Validate fields.
     body('username').isLength({ min: 1 }).trim().withMessage('User name must be specified.'),
-    body('password').isLength({ min: 1 }).trim().withMessage('Password must be specified.'),
+    body('password')
+        .isLength({ min: 1 })
+        .withMessage('Password is required.')
+        .custom((value,{req, loc, path}) => {
+            if (value !== req.body.passwordConfirmation) {
+                // throw error if passwords do not match
+                throw new Error("Passwords must match");
+            } else {
+                return value;
+            }
+        })
+        .withMessage('Passwords must match.'),
+    body('passwordConfirmation')
+        .isLength({ min: 1 })
+        .withMessage('Confirm password is required.')
+        .custom((value,{req, loc, path}) => {
+            if (value !== req.body.passwordConfirmation) {
+                // throw error if passwords do not match
+                throw new Error("Passwords must match");
+            } else {
+                return value;
+            }
+        })
+        .withMessage('Passwords must match.'),
+
     body('first_name').isLength({ min: 1 }).trim().withMessage('First name must be specified.')
         .isAlphanumeric().withMessage('First name has non-alphanumeric characters.'),
     body('family_name').isLength({ min: 1 }).trim().withMessage('Family name must be specified.')
@@ -41,12 +65,12 @@ exports.user_create_post = [
     // Sanitize fields.
     sanitizeBody('username').escape(),
     sanitizeBody('password').escape(),
+    sanitizeBody('passwordConfirmation').escape(),
     sanitizeBody('first_name').escape(),
     sanitizeBody('family_name').escape(),
 
     // Process request after validation and sanitization.
     (req, res, next) => {
-
 
         // Extract the validation errors from a request.
         const errors = validationResult(req);
@@ -77,7 +101,7 @@ exports.user_create_post = [
                         if (err) { 
                             return next(err);
                         };
-                        res.redirect("/");
+                        res.redirect("/messages");
                     })
             });
         })
