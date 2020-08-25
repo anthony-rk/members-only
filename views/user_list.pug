@@ -1,12 +1,12 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to the #{title}
-
+    h1= title
     ul
     each user in user_list
-      li  User Name: #{user.username} 
+      ul
+        li User Name: #{user.username} 
+        li Membership Status: #{user.membership_status} 
 
     else
       li There are no users.
