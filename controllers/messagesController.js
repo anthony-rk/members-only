@@ -17,7 +17,7 @@ exports.get_message_list = function(req, res, next) {
         if (err) { return next(err); }
         // Successful, so render
         // res.render('index', { title: 'Message Board', message_list: list_message });
-        res.render("index", { title: 'Message Board', user: req.user,  message_list: list_message, });
+        res.render("messages", { title: 'Message Board', user: req.user,  message_list: list_message, });
       }); 
 };
 
@@ -68,7 +68,7 @@ exports.message_create_post = [
                         if (err) { 
                             return next(err);
                         };
-                        res.redirect("/");
+                        res.redirect("/messages");
                     })
             };
 }];
