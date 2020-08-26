@@ -91,7 +91,7 @@ app.use('/messages', messagesRouter);
 app.post(
   "/users/log-in",
   passport.authenticate("local", {
-      successRedirect: "/",
+      successRedirect: "/messages",
       failureRedirect: "/users/log-in",
       failureFlash: true
   })
