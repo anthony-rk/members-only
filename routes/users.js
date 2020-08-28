@@ -22,4 +22,7 @@ router.get('/log-in', user_controller.user_login_get);
 /* POST user Log-In. */
 // router.post('/log-in', user_controller.user_login_post);
 
+/* GET User Membership Join Page. */
+router.get('/become-a-member', user_controller.get_user_membership_form);
+
 module.exports = router;
