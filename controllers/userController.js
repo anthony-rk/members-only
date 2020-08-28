@@ -21,6 +21,21 @@ exports.get_user_list = function(req, res, next) {
       }); 
 };
 
+// Get form for becoming a member
+exports.get_user_membership_form = function(req, res, next) {
+
+    res.render('become_a_member', { title: 'Become a Member'});
+
+    // User.findOne({ 'username': req.user.username})
+    //   .populate('user')
+    // //   .sort([['username', 'ascending']])
+    //   .exec(function (err, list_users) {
+    //     if (err) { return next(err); }
+    //     // Successful, so render
+    //     res.render('become_a_member', { title: 'Become a Member', user: req.user.username});
+    //   }); 
+};
+
 // Display User create form on GET.
 exports.user_create_get = function(req, res) {
     res.render('new_user_sign_up_form', { title: 'New User Sign Up'} );
