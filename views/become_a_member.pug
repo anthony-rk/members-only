@@ -6,6 +6,16 @@ block content
     p Welcome #{user.username}!
     p Enter the password to become a member.
 
-  else 
-    p Please Login or Sign up to Participate.
+    form(method='POST' action='')
+      div.form-group
+        label(for='secret_password') Join Club:
+        input#secret_password.form-control(type='password' placeholder='???' name='secret_password' required='true' )
+          
+        button.btn.btn-primary(type='submit') Submit
+    if errors 
+      ul
+        for error in errors
+          li!= error.msg
+    else 
+      p Please Login or Sign up to Participate.
     
