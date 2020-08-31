@@ -21,20 +21,73 @@ exports.get_user_list = function(req, res, next) {
       }); 
 };
 
-// Get form for becoming a member
+// GET form for becoming a member
 exports.get_user_membership_form = function(req, res, next) {
-
-    res.render('become_a_member', { title: 'Become a Member'});
-
-    // User.findOne({ 'username': req.user.username})
-    //   .populate('user')
-    // //   .sort([['username', 'ascending']])
-    //   .exec(function (err, list_users) {
-    //     if (err) { return next(err); }
-    //     // Successful, so render
-    //     res.render('become_a_member', { title: 'Become a Member', user: req.user.username});
-    //   }); 
+    res.render('become_a_member', { title: 'Become a Member', user: req.user});
 };
+
+// POST form for becoming a member
+exports.post_user_membership_form = [
+    
+    // Validate fields.
+    body('secret_password').isLength({ min: 1 }).trim().withMessage('Password must be specified.'),
+    
+    // Sanitize fields.
+    sanitizeBody('secret_password').escape(),
+    
+    // Check if input is equal to the secret word
+    // If so then set User membership status to Member
+
+    // Process request after validation and sanitization.
+    (req, res, next) => {
+
+        // Extract the validation errors from a request.
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            // There are errors. Render form again with sanitized values/errors messages.
+            res.render('become_a_member', { title: 'Become a Member', user: req.user, errors: errors.array()});
+            return;
+        }
+        else {
+            // Data from form is valid.
+            User.findOneAndUpdate({'username': req.user.username }, {$set: {"membership_status": "Member"}} , null, function (err, doc) { 
+                if (err) { 
+                    return next(err)
+                } 
+                res.redirect("/messages");
+        }); 
+
+            // if (req.body.secret_password === 'secret') {
+            //     req.user.membership_status = 'Member'
+            // }
+
+            // // Create a User object with escaped and trimmed data.
+            // bcrypt.genSalt(10, function(err, salt) {
+            //     bcrypt.hash(req.body.password, salt, function(err, hash) {
+            //         // if err, do something
+            //         if (err) { 
+            //             return next(err);
+            //         };
+            //         // otherwise, store hashedPassword in DB
+            //         const user = new User({
+            //             username: req.body.username,
+            //             password: hash,
+            //             first_name: req.body.first_name,
+            //             family_name: req.body.family_name,
+            //             membership_status: 'Non-Member'
+            //         }).save(err => {
+            //             if (err) { 
+            //                 return next(err);
+            //             };
+            //             res.redirect("/messages");
+            //         })
+            // });
+//         })
+//     }
+// }];
+        }
+}];
 
 // Display User create form on GET.
 exports.user_create_get = function(req, res) {
@@ -155,3 +208,7 @@ exports.user_login_get = function(req, res, next) {
 //   req.logout();
 //   res.redirect("/");
 // });
+
+exports.test_fn = function(req,res) {
+    res.send("Success")
+}
