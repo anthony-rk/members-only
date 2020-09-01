@@ -35,11 +35,9 @@ exports.post_user_membership_form = [
     // Sanitize fields.
     sanitizeBody('secret_password').escape(),
     
-    // Check if input is equal to the secret word
-    // If so then set User membership status to Member
-
     // Process request after validation and sanitization.
     (req, res, next) => {
+        // console.log(req, req.body)
 
         // Extract the validation errors from a request.
         const errors = validationResult(req);
