@@ -9,7 +9,7 @@ const UserSchema = new Schema({
     first_name: {type: String, required: true, maxlength: 100},
     family_name: {type: String, required: true, maxlength: 100},
     membership_status: {type: String, required: true, enum: ['Non-Member', 'Member', 'Admin'], default: 'Non-Member'},
-    admin_status: { type: Boolean, required: false}
+    admin_status: {type: Boolean, required: true, default: false}
 });
 
 // Virtual for user's full name
@@ -30,6 +30,7 @@ UserSchema
 
   return fullname;
 });
+
 
 // Export model
 module.exports = mongoose.model('User', UserSchema);
