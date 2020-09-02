@@ -9,6 +9,7 @@ const UserSchema = new Schema({
     first_name: {type: String, required: true, maxlength: 100},
     family_name: {type: String, required: true, maxlength: 100},
     membership_status: {type: String, required: true, enum: ['Non-Member', 'Member', 'Admin'], default: 'Non-Member'},
+    admin_status: { type: Boolean, required: false}
 });
 
 // Virtual for user's full name

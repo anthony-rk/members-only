@@ -30,6 +30,18 @@ exports.post_user_membership_form = [
     
     // Validate fields.
     body('secret_password').isLength({ min: 1 }).trim().withMessage('Password must be specified.'),
+    body('secret_password')
+    .isLength({ min: 1 })
+    .withMessage('Password is required.')
+    .custom((value,{req, loc, path}) => {
+        if (value !== 'secret') {
+            // throw error if passwords do not match
+            throw new Error("Passwords is incorrect, sorry!");
+        } else {
+            return value;
+        }
+    })
+    .withMessage('Passwords is worng'),
     
     // Sanitize fields.
     sanitizeBody('secret_password').escape(),
@@ -48,6 +60,42 @@ exports.post_user_membership_form = [
         else {
             // Data from form is valid.
             User.findOneAndUpdate({'username': req.user.username }, {$set: {"membership_status": "Member"}} , null, function (err, doc) { 
+                if (err) { 
+                    return next(err)
+                } 
+                res.redirect("/messages");
+            }); 
+        }
+}];
+
+// GET form for becoming an Admin
+exports.get_user_membership_admin_form = function(req, res, next) {
+    res.render('become_an_admin', { title: 'Become an Admin', user: req.user});
+};
+
+// POST form for becoming an Admin
+exports.post_user_membership_admin_form = [
+    
+    // Validate fields.
+    body('admin_password').isLength({ min: 1 }).trim().withMessage('Password must be specified.'),
+    
+    // Sanitize fields.
+    sanitizeBody('admin_password').escape(),
+    
+    // Process request after validation and sanitization.
+    (req, res, next) => {
+
+        // Extract the validation errors from a request.
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            // There are errors. Render form again with sanitized values/errors messages.
+            res.render('become_an_admin', { title: 'Become an Admin', user: req.user, errors: errors.array()});
+            return;
+        }
+        else {
+            // Data from form is valid.
+            User.findOneAndUpdate({'username': req.user.username }, {$set: {"admin_status": true}} , null, function (err, doc) { 
                 if (err) { 
                     return next(err)
                 } 
