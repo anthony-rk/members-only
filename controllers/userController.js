@@ -1,4 +1,3 @@
-// var Message = require('../models/message');
 var User = require('../models/user');
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
@@ -37,7 +36,6 @@ exports.post_user_membership_form = [
     
     // Process request after validation and sanitization.
     (req, res, next) => {
-        // console.log(req, req.body)
 
         // Extract the validation errors from a request.
         const errors = validationResult(req);
@@ -54,36 +52,7 @@ exports.post_user_membership_form = [
                     return next(err)
                 } 
                 res.redirect("/messages");
-        }); 
-
-            // if (req.body.secret_password === 'secret') {
-            //     req.user.membership_status = 'Member'
-            // }
-
-            // // Create a User object with escaped and trimmed data.
-            // bcrypt.genSalt(10, function(err, salt) {
-            //     bcrypt.hash(req.body.password, salt, function(err, hash) {
-            //         // if err, do something
-            //         if (err) { 
-            //             return next(err);
-            //         };
-            //         // otherwise, store hashedPassword in DB
-            //         const user = new User({
-            //             username: req.body.username,
-            //             password: hash,
-            //             first_name: req.body.first_name,
-            //             family_name: req.body.family_name,
-            //             membership_status: 'Non-Member'
-            //         }).save(err => {
-            //             if (err) { 
-            //                 return next(err);
-            //             };
-            //             res.redirect("/messages");
-            //         })
-            // });
-//         })
-//     }
-// }];
+            }); 
         }
 }];
 
