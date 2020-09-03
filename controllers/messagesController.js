@@ -15,7 +15,7 @@ exports.get_message_list = function(req, res, next) {
       .exec(function (err, list_message) {
         if (err) { return next(err); }
         // Successful, so render
-        res.render("messages", { title: 'Message Board', user: req.user,  message_list: list_message, });
+        res.render("messages", { title: 'Secret Message Board', user: req.user,  message_list: list_message, });
       }); 
 };
 
