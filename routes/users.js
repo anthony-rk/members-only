@@ -27,7 +27,6 @@ router.get('/membership', user_controller.get_user_membership_form);
 
 /* POST User Membership Join Page. */
 router.post('/membership', user_controller.post_user_membership_form);
-// router.post('./become-a-member', user_controller.test_fn);
 
 /* GET User Membership Admin Join Page. */
 router.get('/membership/admin', user_controller.get_user_membership_admin_form);
