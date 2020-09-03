@@ -41,7 +41,7 @@ exports.post_user_membership_form = [
             return value;
         }
     })
-    .withMessage('Passwords is worng'),
+    .withMessage('Passwords is wrong'),
     
     // Sanitize fields.
     sanitizeBody('secret_password').escape(),
@@ -77,7 +77,18 @@ exports.get_user_membership_admin_form = function(req, res, next) {
 exports.post_user_membership_admin_form = [
     
     // Validate fields.
-    body('admin_password').isLength({ min: 1 }).trim().withMessage('Password must be specified.'),
+    body('admin_password')
+    .isLength({ min: 1 })
+    .withMessage('Password is required.')
+    .custom((value,{req, loc, path}) => {
+        if (value !== 'admin') {
+            // throw error if passwords do not match
+            throw new Error("Passwords is incorrect, sorry!");
+        } else {
+            return value;
+        }
+    })
+    .withMessage('Passwords is wrong'),
     
     // Sanitize fields.
     sanitizeBody('admin_password').escape(),
@@ -223,7 +234,3 @@ exports.user_login_get = function(req, res, next) {
 //   req.logout();
 //   res.redirect("/");
 // });
-
-exports.test_fn = function(req,res) {
-    res.send("Success")
-}

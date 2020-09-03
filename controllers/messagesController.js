@@ -2,7 +2,6 @@ var Message = require('../models/message');
 var User = require('../models/user');
 
 var async = require('async');
-// var debug = require('debug')('author');
 
 const { body,validationResult } = require('express-validator/check');
 const { sanitizeBody } = require('express-validator/filter');
@@ -16,7 +15,6 @@ exports.get_message_list = function(req, res, next) {
       .exec(function (err, list_message) {
         if (err) { return next(err); }
         // Successful, so render
-        // res.render('index', { title: 'Message Board', message_list: list_message });
         res.render("messages", { title: 'Message Board', user: req.user,  message_list: list_message, });
       }); 
 };
@@ -30,12 +28,10 @@ exports.message_create_get = function(req, res) {
 exports.message_create_post = [
     
     // Validate fields.
-    // body('username').isLength({ min: 1 }).trim().withMessage('Username must be specified.'),
     body('message_title').isLength({ min: 1, max: 150 }).trim().withMessage('Message must be <150 characters.'),
     body('message_text').isLength({ min: 1, max: 150 }).trim().withMessage('Message must be <150 characters.'),
 
     // Sanitize fields.
-    // sanitizeBody('username').escape(),
     sanitizeBody('message_text').escape(),
     sanitizeBody('message_title').escape(),
 
@@ -53,22 +49,26 @@ exports.message_create_post = [
         }
         else {
             // Data from form is valid.
-
-                    // if err, do something
-                    // if (err) { 
-                    //     return next(err);
-                    // };
-                    // otherwise, store hashedPassword in DB
-                    const message = new Message({
-                        username: req.user.username,
-                        message_title: req.body.message_title,
-                        message_text: req.body.message_text,
-                    
-                    }).save(err => {
-                        if (err) { 
-                            return next(err);
-                        };
-                        res.redirect("/messages");
-                    })
-            };
+            const message = new Message({
+                username: req.user.username,
+                message_title: req.body.message_title,
+                message_text: req.body.message_text,
+            
+            }).save(err => {
+                if (err) { 
+                    return next(err);
+                };
+                res.redirect("/messages");
+            })
+        };
 }];
+
+// Delete Message on GET
+exports.message_delete_get = function (req, res, next) {
+      Message.findByIdAndDelete(req.params.id, function (err, result) {
+        if (err) {
+          return next(err);
+        }
+      });
+    res.redirect("/messages");
+};
