@@ -9,7 +9,7 @@ var MessageSchema = new Schema(
     message_title: {type: String, required: true, maxlength: 150},
     message_text: {type: String, required: true, maxlength: 150},
     username: {type: String, required: true, maxlength: 100},
-    // date_of_post: {type: Date},
+    timestamp: { type: Date, default: Date.now() },
   }
 );
 
@@ -17,6 +17,10 @@ var MessageSchema = new Schema(
 MessageSchema
   .virtual('date_of_post_formatted')
   .get(function () {
+      if (this.timestamp) {
+        var timestampFormatted = moment(this.timestamp).format('MMMM Do, YYYY');
+        return timestampFormatted;
+      }
       var now = moment();
       return moment(now).format('MMMM Do, YYYY');
 });
