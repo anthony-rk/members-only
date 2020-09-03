@@ -19,7 +19,7 @@ block content
           li  Message: #{message.message_text}
           li  Posted: #{message.date_of_post_formatted}
           if user.admin_status == true
-            a(href="/message/" + message._id + "/delete") Delete Post
+            a(href="/messages/" + message._id + "/delete") Delete Post
       else
         li There are no messages.
     
@@ -30,7 +30,7 @@ block content
       ul
       each message in message_list
         ul
-          li  User Name: #{message.username} 
+          li  Message: #{message.message_text}
           li  Posted: #{message.date_of_post_formatted}
 
   else 
@@ -41,7 +41,7 @@ block content
     ul
     each message in message_list
       ul
-        li  User Name: #{message.username} 
+        li  Message: #{message.message_text}
         li  Posted: #{message.date_of_post_formatted}
     else
       li There are no messages.
