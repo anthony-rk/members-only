@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  h1= title
+  if user
+    p Welcome #{user.username}!
+  
+  else 
+    p Please Login or Sign up to Participate.
+
+  p
+  | How this works:
+  ul
+    li If you are not signed up or have a basic account, you will only see the Message contents at the Secret Message Board.
+    li If you aquire Member access you will then see the Message contents, the Author and the post date at the Secret Message Board.
+    li If you aquire Admin access you will then be able to Delete posts at the Secret Message Board.
