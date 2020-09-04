@@ -15,23 +15,28 @@ html(lang='en')
           block sidebar
             ul(class='sidebar-nav')
               if !user
-                li 
+                  p
                   a(href='/users/log-in') Login
               else
-                li 
+                  p
                   a(href='/users/log-out') Logout
-              li
-                a(href='/about') About
-              li 
-                a(href='/users/sign-up') Sign Up
-              li 
-                a(href='/users/membership') Become a Member
-              li 
-                a(href='/users/membership/admin') Become an Admin
-              li
-                a(href="/messages/") Message Board
-              li 
-                a(href='/users') All Users
-                
-        div(class='col-sm-10')
+              p                  
+              a(href='/about') About
+              
+              p
+              a(href='/users/sign-up') Sign Up
+              
+              p
+              a(href='/users/membership') Become a Member
+              
+              p
+              a(href='/users/membership/admin') Become an Admin
+              
+              p
+              a(href="/messages/") Message Board
+              
+              p
+              a(href='/users') All Users
+                              
+        div(class='main')
           block content
