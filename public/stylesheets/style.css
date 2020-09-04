@@ -13,7 +13,7 @@
 
 /* The navigation menu links */
 .sidebar-nav a {
-  padding: 6px 8px 6px 16px;
+  padding: 6px 8px 6px 6px;
   text-decoration: none;
   font-size: 20px;
   color: #818181;
@@ -30,7 +30,7 @@ h1 {
 }
 
 .main a {
-  color: rgb(130, 231, 198);
+  color: red;
   font-size: 25px;
 }
 
@@ -83,4 +83,8 @@ body {
   /* background-color: red; */
   height: 200px;
   border-bottom: dotted #444 1px;
+}
+
+.about-info {
+  font-size: 15px;
 }
