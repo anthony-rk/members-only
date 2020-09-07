@@ -5,8 +5,8 @@ block content
     h1= title
     if user
       p Welcome #{user.username}!
-      p Membership-Status: #{user.membership_status}
-      p Admin_status: #{user.admin_status}
+      p Membership Status: #{user.membership_status}
+      p Admin: #{ user.admin_status ? 'Yes' : 'No'}
       a(href="/messages/new-post") New Post
       //- Show the full message if they are logged in as a Member  
     else 
