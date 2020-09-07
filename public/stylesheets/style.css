@@ -87,3 +87,24 @@ body {
 .about-info {
   font-size: 15px;
 }
+
+.form-control {
+  width: 400px;
+}
+
+.btn {
+  margin-top: 10px;
+}
+
+.users-in-list {
+  background-color: olive;
+  color: #ee0;
+  border: #818181;
+  width: 300px;
+  border-style: solid;
+  border-width: 5px;
+  margin-top: 25px;
+  padding-left: 15px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
