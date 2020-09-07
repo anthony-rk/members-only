@@ -4,9 +4,10 @@ block content
     h1= title
     ul
     each user in user_list
-      ul
-        li User Name: #{user.username} 
-        li Membership Status: #{user.membership_status} 
+      div(class='users-in-list')
+        p User Name: #{user.username} 
+        p Membership Status: #{user.membership_status} 
+        p Admin Status: #{user.admin_status ? 'Admin' : 'Not an Admin'} 
 
     else
       li There are no users.
