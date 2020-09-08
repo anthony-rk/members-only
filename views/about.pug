@@ -4,7 +4,7 @@ block content
   h1= title
   div(class='about-info')  
     if user
-      p Welcome #{user.username}!
+      p(class='welcome-user') Welcome back #{user.username}!
     
     else 
       p Please Login or Sign up to Participate.
