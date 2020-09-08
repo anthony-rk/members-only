@@ -112,3 +112,9 @@ body {
 .secret-info {
   font-style: italic;
 }
+
+.welcome-user {
+  color: black;
+  font-size: large;
+  font-style: italic;
+}
