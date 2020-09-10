@@ -1,7 +1,7 @@
 extends layout
 
 block content
-    h1= title
+    h1(class='user-list-title')= title
     ul
     each user in user_list
       div(class='users-in-list')
